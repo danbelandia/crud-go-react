@@ -1,0 +1,163 @@
+:root {
+  --bg-base: #091413;
+  --bg-surface: #122825;
+  --bg-surface-hover: #1b3a35;
+
+  --brand-primary: #408a71;
+  --brand-primary-hover: #52a186;
+  --brand-border: #285a48;
+  --brand-light: #b0e4cc;
+
+  --semantic-danger: #cf6679;
+  --semantic-danger-hover: #e07b8d;
+
+  --text-primary: #e6f0ec;
+  --text-muted: #8ea69e;
+  --text-on-accent: #091413;
+
+  --shadow-dark: 0 4px 8px rgba(0, 0, 0, 0.4);
+  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  /* Usamos el color verde principal de tu marca */
+  color: var(--brand-primary); 
+  margin: 0 0 24px 0;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.mi-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: var(--shadow-dark);
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
+}
+
+.mi-tabla th {
+  background-color: var(--bg-surface-hover);
+  color: var(--brand-light);
+  padding: 14px 12px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.mi-tabla td {
+  padding: 12px;
+  border-bottom: 1px solid var(--brand-border);
+}
+
+.btn-editar {
+  background-color: var(--bg-surface-hover);
+  color: var(--text-primary);
+  border: 1px solid var(--brand-border);
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 8px;
+  font-weight: 500;
+  transition: var(--transition-fast);
+}
+
+.btn-editar:hover {
+  background-color: var(--brand-primary);
+  color: var(--text-on-accent);
+  border-color: var(--brand-primary);
+}
+
+.btn-eliminar {
+  background-color: var(--semantic-danger);
+  color: var(--text-on-accent);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: var(--transition-fast);
+}
+
+.btn-eliminar:hover {
+  background-color: var(--semantic-danger-hover);
+  transform: scale(1.02);
+}
+
+.formulario-caja {
+  padding: 20px;
+  border: 1px solid var(--brand-border);
+  border-radius: 8px;
+  background-color: var(--bg-surface);
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-dark);
+}
+
+.formulario-caja input[type="text"],
+.formulario-caja input[type="email"] {
+  background-color: var(--bg-base);
+  border: 1px solid var(--brand-border);
+  border-radius: 4px;
+  padding: 8px;
+  color: var(--text-primary);
+  transition: var(--transition-fast);
+}
+
+.formulario-caja input[type="text"]:focus,
+.formulario-caja input[type="email"]:focus {
+  outline: none;
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 2px rgba(64, 138, 113, 0.25);
+}
+
+/* --- ESTILOS DE PAGINACIÓN --- */
+.paginacion-contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px; /* Espaciado uniforme entre elementos */
+  margin-top: 24px;
+  padding: 16px 0;
+}
+
+.btn-paginacion {
+  background-color: var(--bg-surface); /* Fondo oscuro elevado */
+  color: var(--text-primary);
+  border: 1px solid var(--brand-border); /* Borde verde oscuro sutil */
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.875rem; /* Un poco más pequeño que el texto normal */
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-paginacion:hover:not(:disabled) {
+  background-color: var(--bg-surface-hover);
+  border-color: var(--brand-primary); /* Se ilumina el borde al pasar el mouse */
+  color: var(--brand-light);
+}
+
+/* Estado inactivo fundamental para la UX */
+.btn-paginacion:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background-color: transparent;
+  border-color: var(--brand-border);
+}
+
+.paginacion-texto {
+  color: var(--text-muted); /* Usamos el texto secundario para no distraer */
+  font-weight: 500;
+  font-size: 0.875rem;
+  min-width: 80px; /* Evita que los botones salten cuando cambia el número de página */
+  text-align: center;
+}
+
+/* Resaltamos solo el número actual */
+.paginacion-texto span {
+  color: var(--text-primary);
+  font-weight: 600;
+}

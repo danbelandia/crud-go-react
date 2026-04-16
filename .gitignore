@@ -1,0 +1,13 @@
+# Base de datos local (¡Nunca se sube la data real!)
+*.db
+*.sqlite
+*.sqlite3
+
+# Frontend (React/Node)
+frontend/node_modules/
+frontend/dist/
+.env
+
+# Backend (Go)
+*.exe
+/bin/
