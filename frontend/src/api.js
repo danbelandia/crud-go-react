@@ -9,7 +9,7 @@ const getHeaders = () => ({
 //GET Paginado
 export const fetchUsers = async (page = 1, limit = 5) => {
   const response = await fetch(`${BASE_URL}?page=${page}&limit=${limit}`);
-  if (!response.ok) throw new Error('Error al obtener usuarios');
+  if (!response.ok) throw new Error('Error al obtener usuarios.');
   return response.json();
 };
 
@@ -20,7 +20,7 @@ export const createUser = async (userData) => {
     headers: getHeaders(),
     body: JSON.stringify(userData),
   });
-  if (!response.ok) throw new Error('Error al crear usuario');
+  if (!response.ok) throw new Error('Error al crear usuario.');
   return response.json();
 };
 
@@ -31,7 +31,7 @@ export const updateUser = async (id, userData) => {
     headers: getHeaders(),
     body: JSON.stringify(userData),
   });
-  if (!response.ok) throw new Error('Error al actualizar usuario');
+  if (!response.ok) throw new Error('Error al actualizar usuario.');
   return response.json();
 };
 
@@ -41,6 +41,6 @@ export const deleteUser = async (id) => {
     method: 'DELETE',
     headers: getHeaders(),
   });
-  if (!response.ok) throw new Error('Error al eliminar usuario');
+  if (!response.ok) throw new Error('Error al eliminar usuario.');
   return response.json();
 };

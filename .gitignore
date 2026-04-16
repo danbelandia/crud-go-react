@@ -1,4 +1,3 @@
-# Base de datos local (¡Nunca se sube la data real!)
 *.db
 *.sqlite
 *.sqlite3
