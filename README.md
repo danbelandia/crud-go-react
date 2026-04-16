@@ -4,18 +4,18 @@ Un sistema integral de gestión de usuarios desarrollado con una arquitectura li
 
 ## 🚀 Tecnologías Utilizadas
 
-### Backend (Cocina)
+### Backend
 * **Lenguaje:** Go (Golang)
 * **Base de Datos:** SQLite (`modernc.org/sqlite`)
 * **Arquitectura:** Hexagonal / Puertos y Adaptadores
-* **Características:** * Loggers estructurados (`log/slog`)
+* **Características:** * 
   * Middlewares personalizados (CORS, Autenticación por roles)
   * Paginación nativa
 
-### Frontend (Comedor)
+### Frontend
 * **Librería:** React 18
 * **Herramienta de Construcción:** Vite
-* **Estilos:** CSS puro (Diseño UI corporativo)
+* **Estilos:** CSS
 * **Características:**
   * Renderizado condicional
   * Manejo de estado centralizado
