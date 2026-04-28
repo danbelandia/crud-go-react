@@ -38,9 +38,9 @@ func (h *UserHandler) HandleUsuarios(w http.ResponseWriter, r *http.Request) {
 func (h *UserHandler) getUsers(w http.ResponseWriter, r *http.Request) {
 	path := strings.Trim(r.URL.Path, "/") // Quita "/" al inicio y al final
 	parts := strings.Split(path, "/")     // Divide por partes
-
+	//Si viene solo usuarios, lista todo
 	if len(parts) == 1 && parts[0] == "usuarios" {
-		limit := 10
+		limit := 5
 		page := 1
 
 		if lStr := r.URL.Query().Get("limit"); lStr != "" {
@@ -55,8 +55,10 @@ func (h *UserHandler) getUsers(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
+		search := r.URL.Query().Get("search")
 		offset := (page - 1) * limit
-		users, err := h.repo.GetAll(limit, offset)
+
+		users, err := h.repo.GetAll(limit, offset, search)
 		if err != nil {
 			http.Error(w, "Error al obtener los usuarios", http.StatusInternalServerError)
 			return
@@ -65,14 +67,14 @@ func (h *UserHandler) getUsers(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(users)
 		return
 	}
-
+	//Si la division tiene 2 partes, convierte la 2da parte en numero y lo busca en BD
 	if len(parts) == 2 && parts[0] == "usuarios" {
 		id, err := strconv.Atoi(parts[1])
 		if err != nil {
 			http.Error(w, "el id debe ser un numero", http.StatusBadRequest)
 			return
 		}
-
+		//Busca en la BD el ID
 		user, err := h.repo.GetByID(id)
 		if err != nil {
 			http.Error(w, "Usuario no encontrado", http.StatusNotFound)

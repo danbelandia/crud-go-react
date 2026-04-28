@@ -161,3 +161,34 @@
   color: var(--text-primary);
   font-weight: 600;
 }
+
+/* --- ESTILOS DEL BUSCADOR --- */
+.contenedor-busqueda {
+  margin-bottom: 25px;
+  display: flex;
+  width: 100%;
+}
+
+.input-busqueda {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--brand-border);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 1rem;
+  box-shadow: var(--shadow-dark);
+  transition: var(--transition-fast);
+}
+
+.input-busqueda:hover {
+  background-color: var(--bg-surface-hover);
+}
+
+.input-busqueda:focus {
+  outline: none;
+  background-color: var(--bg-base);
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 2px rgba(64, 138, 113, 0.25);
+}

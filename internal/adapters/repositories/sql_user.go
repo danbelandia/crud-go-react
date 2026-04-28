@@ -91,10 +91,16 @@ func (r *SQLiteUserRepository) Delete(id int) error {
 }
 
 // Obtener todos los usuarios
-func (r *SQLiteUserRepository) GetAll(limit int, offset int) ([]*domain.User, error) {
-	query := `SELECT id, name, last_name, email, is_admin FROM users LIMIT ? OFFSET ?`
+func (r *SQLiteUserRepository) GetAll(limit int, offset int, search string) ([]*domain.User, error) {
+	query := `
+		SELECT id, name, last_name, email, is_admin
+		FROM users
+		WHERE name LIKE ? OR last_name LIKE ? OR email LIKE ?
+		LIMIT ? OFFSET ?`
+	
+	searchPattern := "%" + search + "%" // Agrega comodines para búsqueda parcial
 
-	rows, err := r.db.Query(query, limit, offset)
+	rows, err := r.db.Query(query, searchPattern, searchPattern, searchPattern, limit, offset)
 	if err != nil {
 		return nil, err
 	}
