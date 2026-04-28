@@ -1,14 +1,15 @@
 const BASE_URL = 'http://localhost:8080/usuarios';
 
-// Centralizamos los headers para no repetirlos
+
 const getHeaders = () => ({
   'Content-Type': 'application/json',
   'X-Role': 'super-clave-admin-123'
 });
 
 //GET Paginado
-export const fetchUsers = async (page = 1, limit = 5) => {
-  const response = await fetch(`${BASE_URL}?page=${page}&limit=${limit}`);
+export const fetchUsers = async (page = 1, limit = 5, search = '') => {
+  const querySearch = encodeURIComponent(search); //Codificamos para evitar problemas con caracteres especiales
+  const response = await fetch(`${BASE_URL}?page=${page}&limit=${limit}&search=${querySearch}`); //Obtiene la pagina actual y el límite dinámico, además del término de búsqueda
   if (!response.ok) throw new Error('Error al obtener usuarios.');
   return response.json();
 };

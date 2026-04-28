@@ -9,7 +9,7 @@ type UserRepository interface {
 
 	Update(user *domain.User) error
 
-	GetAll(limit int, offset int) ([]*domain.User, error)
+	GetAll(limit int, offset int, search string) ([]*domain.User, error)
 	
 	Delete(id int) error
 }

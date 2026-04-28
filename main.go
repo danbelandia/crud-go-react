@@ -8,6 +8,7 @@ import (
 
 	"crud-stefanini/internal/adapters/handlers"
 	"crud-stefanini/internal/adapters/repositories"
+	"crud-stefanini/internal/utils"
 
 	_ "modernc.org/sqlite"
 )
@@ -39,11 +40,12 @@ func main() {
 	repo := repositories.NewSqlUserRepository(db)
 	//Capa de HTTP
 	userHandler := handlers.NewUserHandler(repo)
-	//Con esto evitamos el cors
-	handlerConCors := CorsMiddleware(userHandler.HandleUsuarios)
-	//Ruta y usamos función principal del handler
-	http.HandleFunc("/usuarios", handlerConCors)
-	http.HandleFunc("/usuarios/", handlerConCors)
+	//Agregamos el logger a los handlers
+	handlersConLogger := utils.Logger(userHandler.HandleUsuarios)
+	handlerCompleto := CorsMiddleware(handlersConLogger)
+	//Rutas usuarios y usuarios/id
+	http.HandleFunc("/usuarios", handlerCompleto)
+	http.HandleFunc("/usuarios/", handlerCompleto)
 
 	fmt.Println("Servidor -> http://localhost:8080/usuarios")
 	log.Fatal(http.ListenAndServe(":8080", nil))

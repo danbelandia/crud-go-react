@@ -2,17 +2,19 @@ import { useState, useEffect } from 'react';
 import { fetchUsers, createUser, updateUser, deleteUser } from './api';
 import { UserForm } from './components/UserForm';
 import { UserTable } from './components/UserTable';
-
+import { LimitSelector } from './components/LimitSelector';
 const initialForm = { id: '', name: '', last_name: '', email: '', is_admin: false };
 
 function App() {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [formData, setFormData] = useState(initialForm);
+  const [limit, setLimit] = useState(5); //Estado del filtro, comienza en 5 por defecto
+  const [searchTerm, setSearchTerm] = useState(''); // Estado para el término de búsqueda
 
   const loadUsers = async () => {
     try {
-      const data = await fetchUsers(page, 5);
+      const data = await fetchUsers(page, limit, searchTerm); //Le pasamos el límite dinámico y el término de búsqueda a la función de fetchUsers
       setUsers(data || []); 
     } catch (error) {
       console.error(error);
@@ -24,7 +26,7 @@ function App() {
       await loadUsers();
     }
     getInitialData();
-  }, [page]);
+  }, [page, limit, searchTerm]); // Se ejecuta si cambia la página O el límite O el término de búsqueda
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -78,7 +80,7 @@ function App() {
 
   return (
     <div style={{ padding: '20px', fontFamily: 'system-ui', maxWidth: '1000px', margin: '0 auto' }}>
-      <h1 class="page-title">Panel de Usuarios</h1>
+      <h1 className="page-title">Panel de Usuarios</h1>
 
       <UserForm 
         formData={formData} 
@@ -87,34 +89,57 @@ function App() {
         onCancel={() => setFormData(initialForm)} 
       />
 
+      <div className= "contenedor-busqueda">
+        <input 
+          type="text" 
+          className="input-busqueda"
+          placeholder="Buscar por nombre, apellido o correo..." 
+          value={searchTerm}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            setPage(1); // Importante: Volver a la página 1 al buscar algo nuevo
+          }}
+        />
+      </div>
+
+      {}
+      <LimitSelector 
+        limit={limit} 
+        onChange={(nuevoLimite) => {
+          setLimit(nuevoLimite);
+          setPage(1);
+        }} 
+      />
+
       <UserTable 
         users={users} 
         onEdit={handleEdit} 
         onDelete={handleDelete} 
       />
 
-<div className="paginacion-contenedor">
-  <button 
-    className="btn-paginacion"
-    onClick={() => setPage(page - 1)} 
-    disabled={page === 1}
-  >
-    Anterior
-  </button>
-  
-  {}
-  <div className="paginacion-texto">
-    Página <span>{page}</span>
-  </div>
-  
-  <button 
-    className="btn-paginacion"
-    onClick={() => setPage(page + 1)} 
-    disabled={users.length < 5}
-  >
-    Siguiente
-  </button>
-</div>
+      <div className="paginacion-contenedor" style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <button 
+          className="btn-paginacion"
+          style={{ padding: '8px 16px', marginRight: '15px' }}
+          onClick={() => setPage(page - 1)} 
+          disabled={page === 1}
+        >
+          Anterior
+        </button>
+        
+        <div className="paginacion-texto" style={{ fontWeight: 'bold' }}>
+          Página <span>{page}</span>
+        </div>
+        
+        <button 
+          className="btn-paginacion"
+          style={{ padding: '8px 16px', marginLeft: '15px' }}
+          onClick={() => setPage(page + 1)} 
+          disabled={users.length < limit} // Si el número de usuarios es menor al límite, no hay más páginas
+        >
+          Siguiente
+        </button>
+      </div>
     </div>
   );
 }
